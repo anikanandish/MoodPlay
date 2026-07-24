@@ -17,3 +17,11 @@ No internet needed. No API key. Completely private.
 2. Run: ollama pull gemma3
 3. pip install ollama
 4. python mood2ui.py
+
+
+##  Future Scope
+
+- [ ] **Spotify API Integration:** Connect directly to Spotify to generate real-time play-lists and stream audio straight from the app.
+- [ ] **Multi-Mood Blending:** Allow users to select multiple emotions (e.g., "Chill + Energetic") for more customized recommendations.
+- [ ] **UI/UX Polish:** Enhance the Tkinter interface with custom modern themes, dynamic visualizers, and album art displays.
+- [ ] **Playlist Export & History:** Save generated playlists locally and export them directly to user streaming accounts.
