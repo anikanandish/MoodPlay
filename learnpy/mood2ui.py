@@ -25,6 +25,9 @@ def clear_all():
     result_box.config(state='disabled')
     clear_btn = tk.Button(window, text="Clear", command=clear_all)
     clear_btn.pack(pady=5)
+def on_enter(event):
+    get_playlist()
+    mood_input.bind("<Return>", on_enter)
     
     def run():
         prompt = f"""
