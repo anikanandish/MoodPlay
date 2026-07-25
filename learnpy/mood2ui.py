@@ -16,6 +16,15 @@ def get_playlist():
     result_box.insert(tk.END, "Finding your playlist...\n\n")
     result_box.config(state='disabled')
     get_btn.config(state='disabled')
+
+
+def clear_all():
+    mood_input.delete(0, tk.END)
+    result_box.config(state='normal')
+    result_box.delete(1.0, tk.END)
+    result_box.config(state='disabled')
+    clear_btn = tk.Button(window, text="Clear", command=clear_all)
+    clear_btn.pack(pady=5)
     
     def run():
         prompt = f"""
@@ -44,7 +53,7 @@ def toggle_theme(widget, bg_color, fg_color):
     """Simple helper to switch UI theme colors."""
     widget.config(bg=bg_color, fg=fg_color)
 
-    
+
 
 # Window setup
 window = tk.Tk()
