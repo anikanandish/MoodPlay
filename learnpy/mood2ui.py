@@ -40,6 +40,12 @@ def get_playlist():
     
     threading.Thread(target=run).start()
 
+def toggle_theme(widget, bg_color, fg_color):
+    """Simple helper to switch UI theme colors."""
+    widget.config(bg=bg_color, fg=fg_color)
+
+    
+
 # Window setup
 window = tk.Tk()
 window.title("🎵 MoodPlay")
