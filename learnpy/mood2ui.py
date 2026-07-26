@@ -20,6 +20,15 @@ def get_playlist():
     get_btn.config(state='disabled')
 
 
+def log_mood(mood):
+    """Saves recent mood queries to history (keeps last 5)."""
+    if mood and mood not in mood_history:
+        mood_history.insert(0, mood)
+        if len(mood_history) > 5:
+            mood_history.pop()
+        print(f"Recent moods: {', '.join(mood_history)}")
+
+
 def clear_all():
     mood_input.delete(0, tk.END)
     result_box.config(state='normal')
