@@ -6,6 +6,8 @@ from tkinter import scrolledtext
 import ollama
 import threading
 
+mood_history = []
+
 def get_playlist():
     mood = mood_input.get()
     if not mood.strip():
