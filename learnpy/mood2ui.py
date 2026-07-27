@@ -8,6 +8,7 @@ import threading
 
 mood_history = []
 
+
 def get_playlist():
     mood = mood_input.get()
     log_mood(mood)
@@ -75,6 +76,8 @@ window = tk.Tk()
 window.title("🎵 MoodPlay")
 window.geometry("600x500")
 window.configure(bg="#1a1a2e")
+window.title("MoodPlay")
+window.geometry("400x300")
 
 # Title
 tk.Label(window, text="🎵 MoodPlay", font=("Arial", 24, "bold"),
