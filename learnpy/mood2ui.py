@@ -79,6 +79,9 @@ window.configure(bg="#1a1a2e")
 window.title("MoodPlay")
 window.geometry("400x300")
 window.configure(bg="#1c1c67")
+window.resizable(False,False)
+
+
 
 # Title
 tk.Label(window, text="🎵 MoodPlay", font=("Arial", 24, "bold"),
