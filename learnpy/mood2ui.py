@@ -1,5 +1,7 @@
 # MoodPlay UI Module
 import sys
+
+from sympy import root
 print(sys.version)
 import tkinter as tk
 from tkinter import scrolledtext
@@ -12,6 +14,7 @@ mood_history = []
 def get_playlist():
     mood = mood_input.get()
     mood_input.config(justify="center")
+   
     log_mood(mood)
     if not mood.strip():
         return
@@ -104,6 +107,10 @@ get_btn = tk.Button(window, text="Find My Playlist ▶",
                     padx=20, pady=8, cursor="hand2",
                     command=get_playlist)
 get_btn.pack(pady=10)
+
+submit_btn = tk.Button(window, text="Submit")
+submit_btn.pack()
+submit_btn.config(cursor="hand2")
 
 # Results
 result_box = scrolledtext.ScrolledText(window, font=("Arial", 11),
