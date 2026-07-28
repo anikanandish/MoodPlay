@@ -11,6 +11,7 @@ mood_history = []
 
 def get_playlist():
     mood = mood_input.get()
+    mood_input.config(justify="center")
     log_mood(mood)
     if not mood.strip():
         return
