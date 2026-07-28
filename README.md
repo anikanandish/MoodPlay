@@ -12,6 +12,11 @@ No internet needed. No API key. Completely private.
 - Gemma 3 (runs locally)
 - Tkinter (UI)
 
+## Features
+- **Mood-Based Search:** Enter any mood to fetch a matching playlist.
+- **Clean UI:** Built with Tkinter featuring custom window sizing, dark mode background, and interactive hover effects.
+- **Keyboard Shortcuts:** Press `Enter` to submit queries instantly.
+
 ## How to run
 1. Install Ollama from ollama.com
 2. Run: ollama pull gemma3
