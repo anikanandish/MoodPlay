@@ -86,7 +86,7 @@ tk.Label(
     text="🎵 MoodPlay",
     font=("Arial", 22, "bold"),
     bg="#1a1a2e",
-    fg="#e94560",
+    fg="#610e1c",
 ).pack(pady=(15, 5))
 tk.Label(
     window,
@@ -100,7 +100,7 @@ mood_input = tk.Entry(
     window,
     font=("Arial", 13),
     width=30,
-    bg="#16213e",
+    bg="#3f5797",
     fg="white",
     insertbackground="white",
     relief="flat",
