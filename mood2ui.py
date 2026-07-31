@@ -1,4 +1,4 @@
-#trying somethingbg
+#TODO: try weather based playlist suggestions
 import os
 import sys
 import threading
