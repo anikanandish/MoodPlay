@@ -86,12 +86,12 @@ tk.Label(
     window,
     text="🎵 MoodPlay",
     font=("Arial", 22, "bold"),
-    bg="#1a1a2e",
+    bg="#323298",
     fg="#610e1c",
 ).pack(pady=(15, 5))
 tk.Label(
     window,
-    text="How are you feeling today?",
+    text="How are you feeling today??",
     font=("Arial", 11),
     bg="#1a1a2e",
     fg="#a0a0c0",
