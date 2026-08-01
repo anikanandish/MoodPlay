@@ -78,7 +78,7 @@ def clear_all():
 window = tk.Tk()
 window.title("🎵 MoodPlay")
 window.geometry("500x550")
-window.configure(bg="#1a1a2e")
+window.configure(bg="#323298")
 window.resizable(False, False)
 
 # --- UI Elements ---
