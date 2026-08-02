@@ -8,7 +8,7 @@ from tkinter import scrolledtext
 from dotenv import load_dotenv
 import ollama
 
-# 1. Load Spotify credentials from .env
+# 1. Load Spotify credentials from .env!!
 load_dotenv()
 client_id = os.getenv("SPOTIPY_CLIENT_ID")
 client_secret = os.getenv("SPOTIPY_CLIENT_SECRET")
