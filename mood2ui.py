@@ -1,4 +1,5 @@
 #TODO: try weather based playlist suggestions
+#spotify layer working??not
 import os
 import sys
 import threading
