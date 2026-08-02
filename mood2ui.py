@@ -17,7 +17,7 @@ mood_history = []
 
 
 def log_mood(mood):
-    """Saves recent mood queries to history (keeps last 5)."""
+    """Saves recent mood queries to history (keeps last 5 only)."""
     if mood and mood not in mood_history:
         mood_history.insert(0, mood)
         if len(mood_history) > 5:
