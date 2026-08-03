@@ -37,7 +37,7 @@ def get_playlist():
     get_btn.config(state="disabled")
     result_box.config(state="normal")
     result_box.delete(1.0, tk.END)
-    result_box.insert(tk.END, "🎵 DJ Gemma is thinking of your playlist...\n\n")
+    result_box.insert(tk.END, "🎵 DJ Gemma is thinking of thou playlist...\n\n")
     result_box.config(state="disabled")
 
     # Run Ollama in background thread so GUI doesn't freeze
