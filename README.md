@@ -13,9 +13,10 @@ No internet needed. No API key. Completely private.
 - Tkinter (UI)
 
 ## Features
-- **Mood-Based Search:** Enter any mood to fetch a matching playlist.
-- **Clean UI:** Built with Tkinter featuring custom window sizing, dark mode background, and interactive hover effects.
-- **Keyboard Shortcuts:** Press `Enter` to submit queries instantly.
+- **Semantic Mood Detection:** Input raw emotions, abstract vibes, or daily thoughts to receive contextual song picks.
+- **Dark Mode UI:** Sleek, high-contrast Tkinter interface built with hover transitions and centered layouts.
+- **Fast Interaction:** Hit `Enter` to query immediately without touching the mouse.
+- **Local Resilience:** Continues functioning entirely without an active network connection.
 
 ## How to run
 1. Install Ollama from ollama.com
