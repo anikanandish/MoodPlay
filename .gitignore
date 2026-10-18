@@ -13,3 +13,6 @@ env/
 # IDE / Editor settings
 .vscode/
 .idea/
+
+# Log files
+*.log

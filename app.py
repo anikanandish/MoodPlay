@@ -87,9 +87,16 @@ app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 
 if __name__ == "__main__":
+    import sys
     import uvicorn
+    if sys.stdout.encoding != 'utf-8':
+        try:
+            sys.stdout.reconfigure(encoding='utf-8')
+        except Exception:
+            pass
+
     print("\n" + "=" * 60)
-    print("🎵 MoodPlay Local Web Server Starting...")
-    print("✨ Open your browser to: http://localhost:8000")
+    print(">> MoodPlay Local Web Server Starting...")
+    print(">> Open your browser to: http://localhost:8000")
     print("=" * 60 + "\n")
     uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)

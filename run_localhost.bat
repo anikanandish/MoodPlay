@@ -11,9 +11,17 @@ echo.
 powershell -Command "if (-not (Get-Process *ollama* -ErrorAction SilentlyContinue)) { Start-Process 'ollama' -ArgumentList 'serve' -WindowStyle Hidden; Start-Sleep -Seconds 2 }"
 
 echo.
+echo ✨ Opening http://localhost:8000 in your browser...
+start http://localhost:8000
+
+echo.
 echo ✨ Server running at: http://localhost:8000
 echo ✨ Press Ctrl+C in this window to stop the server.
 echo.
 
-python -m uvicorn app:app --host 127.0.0.1 --port 8000 --reload
-pause
+python app.py
+if %ERRORLEVEL% NEQ 0 (
+    echo.
+    echo ❌ Server exited with error code %ERRORLEVEL%.
+    pause
+)
