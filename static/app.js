@@ -132,10 +132,22 @@ async function triggerCurate(mood) {
     renderResults(data);
     initHistory(); // Refresh history
   } catch (err) {
-    alert(`Could not generate playlist: ${err.message}`);
+    console.error("Curation error:", err);
+    // Display in-page graceful fallback instead of blocking browser alert
+    resultsSection.style.display = 'block';
+    document.getElementById('vibeTitle').textContent = 'Acoustic Companion';
+    document.getElementById('vibeAnalysis').textContent = `Could not reach Ollama: ${err.message}. Please verify Ollama is running.`;
+    document.getElementById('tracksGrid').innerHTML = `
+      <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); padding: 1.5rem; border-radius: 12px; text-align: center;">
+        <p style="color: #f87171; font-weight: 600; margin-bottom: 0.5rem;">⚠️ Curation Notice</p>
+        <p style="color: #94a3b8; font-size: 0.9rem;">${escapeHtml(err.message)}</p>
+      </div>
+    `;
   } finally {
     clearInterval(interval);
     loadingState.style.display = 'none';
+    mainVinyl.classList.remove('spinning');
+    toneArm.classList.remove('playing');
     submitBtn.disabled = false;
   }
 }
