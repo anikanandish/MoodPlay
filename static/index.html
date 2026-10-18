@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoodPlay — AI Vinyl & Music Companion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="noise-overlay"></div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="brand">
+        <div class="vinyl-badge-mini" id="miniTurntable">
+          <div class="mini-disc"></div>
+          <div class="mini-dot"></div>
+        </div>
+        <div>
+          <h1 class="logo-title">MoodPlay</h1>
+          <p class="logo-subtitle">Private Audiophile AI Music Companion</p>
+        </div>
+      </div>
+
+      <div class="system-status-pills">
+        <div class="status-pill" id="ollamaPill">
+          <span class="status-dot"></span>
+          <span class="status-text">Ollama (Gemma 3)</span>
+        </div>
+        <div class="status-pill" id="spotifyPill">
+          <span class="status-dot"></span>
+          <span class="status-text">Spotify Ready</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Hero / Input Section -->
+      <section class="mood-console">
+        <div class="console-card">
+          <div class="turntable-visual">
+            <div class="vinyl-record" id="mainVinyl">
+              <div class="grooves"></div>
+              <div class="vinyl-label">
+                <span class="label-brand">MOODPLAY</span>
+                <span class="label-rpm">33⅓ RPM</span>
+              </div>
+              <div class="spindle-hole"></div>
+            </div>
+            <div class="tone-arm" id="toneArm">
+              <div class="arm-base"></div>
+              <div class="arm-rod"></div>
+              <div class="cartridge"></div>
+            </div>
+          </div>
+
+          <div class="console-form">
+            <span class="tagline-chip">100% PRIVATE • RUNS LOCALLY</span>
+            <h2 class="prompt-heading">How are you feeling right now?</h2>
+            <p class="prompt-desc">Describe your mood, room aesthetic, weather, or emotional state. Gemma 3 interprets the acoustic textures you need.</p>
+
+            <form id="moodForm" class="mood-form">
+              <div class="input-wrapper">
+                <input 
+                  type="text" 
+                  id="moodInput" 
+                  placeholder="e.g. Rainy midnight in Kyoto, craving warm Rhodes piano & mellow brass..."
+                  autocomplete="off"
+                  required
+                />
+                <button type="submit" id="submitBtn" class="primary-btn">
+                  <span class="btn-text">Curate Vibe</span>
+                  <span class="btn-icon">▶</span>
+                </button>
+              </div>
+            </form>
+
+            <!-- Quick Mood Vibe Presets -->
+            <div class="vibe-presets">
+              <span class="vibe-label">Quick Vibes:</span>
+              <div class="preset-chips">
+                <button class="preset-chip" data-vibe="Late night jazz with pouring rain outside">☕ Late Night Jazz</button>
+                <button class="preset-chip" data-vibe="Deep focus ambient electronic for flow state coding">⚡ Deep Focus</button>
+                <button class="preset-chip" data-vibe="Nostalgic golden hour indie folk acoustic">🌅 Golden Hour</button>
+                <button class="preset-chip" data-vibe="Melancholy bittersweet piano for deep reflection">🌧️ Melancholy</button>
+                <button class="preset-chip" data-vibe="Midnight highway synthwave drive with city lights">🚗 Midnight Drive</button>
+                <button class="preset-chip" data-vibe="Warm cozy acoustic coffeehouse on a Sunday">🛋️ Cozy Acoustic</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Loading State Banner -->
+      <section class="loading-state" id="loadingState" style="display: none;">
+        <div class="loader-content">
+          <div class="spinning-vinyl-loader"></div>
+          <h3 id="loaderTitle">Gemma 3 is analyzing the emotional texture...</h3>
+          <p id="loaderSubtitle">Sifting through acoustic harmonies, tempo curves, and sonic dynamics.</p>
+        </div>
+      </section>
+
+      <!-- Recommendations Output Section -->
+      <section class="results-section" id="resultsSection" style="display: none;">
+        <div class="vibe-interpretation-card" id="vibeCard">
+          <div class="vibe-header">
+            <span class="badge-vibe">AI Vibe Synthesis</span>
+            <h3 class="vibe-title" id="vibeTitle">Midnight Rain & Warm Brass</h3>
+          </div>
+          <p class="vibe-analysis" id="vibeAnalysis">Gemma 3 identified introspective warmth with low-tempo jazz cadences.</p>
+        </div>
+
+        <div class="tracks-header">
+          <h3>Curated Playlist</h3>
+          <span class="track-count" id="trackCount">5 Tracks</span>
+        </div>
+
+        <div class="tracks-grid" id="tracksGrid">
+          <!-- Dynamic Song Cards Injected Here -->
+        </div>
+      </section>
+
+      <!-- History Drawer -->
+      <section class="history-section" id="historySection">
+        <div class="section-title-row">
+          <h4>Recent Moods</h4>
+        </div>
+        <div class="history-chips" id="historyChips">
+          <!-- History chips populated dynamically -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-privacy">
+        <span class="lock-icon">🔒</span>
+        <span>Your mood never leaves your computer. Inference performed 100% locally with <strong>Gemma 3</strong> via <strong>Ollama</strong>.</span>
+      </div>
+      <div class="footer-links">
+        <span>MoodPlay v1.0</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
