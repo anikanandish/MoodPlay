@@ -1,6 +1,7 @@
 """
-mood_engine.py — Core AI mood understanding powered by local Gemma 3 via Ollama.
-Includes auto-startup for Ollama and an offline acoustic vault fallback.
+mood_engine.py — Genuine Audiophile Music Companion.
+Curates music based on acoustic textures, analog warmth, and emotional landscapes.
+Powered by local Gemma 3 with a rich offline acoustic vault fallback.
 """
 
 import json
@@ -16,52 +17,152 @@ MODEL_NAME = "gemma3"
 VAULT = {
     "jazz": {
         "headline": "Velvet Brass & Dim Lamplight",
-        "analysis": "Warm brushwork, melancholic horn voicings, and understated walking basslines.",
+        "analysis": "A nocturnal landscape defined by warm brushwork on coated snare heads, melancholic horn voicings, and the woody acoustic resonance of an upright bass.",
         "songs": [
-            {"title": "Autumn Leaves", "artist": "Bill Evans Trio", "reason": "Tender, contemplative piano phrasing perfectly fitted for quiet hours."},
-            {"title": "'Round Midnight", "artist": "Thelonious Monk", "reason": "Atmospheric dissonance that captures late-night introspection."},
-            {"title": "Blue in Green", "artist": "Miles Davis", "reason": "Haunting muted trumpet evoking stillness and solitude."},
-            {"title": "My Foolish Heart", "artist": "Bill Evans", "reason": "Delicate touch and gentle impressionistic jazz harmonies."}
+            {
+                "title": "Autumn Leaves",
+                "artist": "Bill Evans Trio",
+                "reason": "Tender, contemplative piano phrasing with subtle brushed cymbals, recorded with intimate tape warmth.",
+                "textures": ["Brushed Snare", "Upright Bass", "Acoustic Piano", "Tape Saturation"]
+            },
+            {
+                "title": "'Round Midnight",
+                "artist": "Thelonious Monk",
+                "reason": "Atmospheric chord dissonance and spacious pauses that capture late-night solitude.",
+                "textures": ["Monk Voicings", "Solo Piano", "Analog Warmth", "Nocturnal Pace"]
+            },
+            {
+                "title": "Blue in Green",
+                "artist": "Miles Davis",
+                "reason": "Harmon-muted trumpet evoking still rain and midnight streetlamps.",
+                "textures": ["Muted Trumpet", "Modal Harmony", "Minimalist Drums", "Room Reverb"]
+            },
+            {
+                "title": "My Foolish Heart",
+                "artist": "Bill Evans",
+                "reason": "Impressionistic touch with gentle room ambiance and brushed drum accompaniment.",
+                "textures": ["Impressionist Touch", "Subtle Cymbals", "Acoustic Trio", "Warm Velvet"]
+            }
         ]
     },
     "rain": {
-        "headline": "Raindrops on Glass & Soft Keys",
-        "analysis": "Gentle acoustic resonance, muted reverb, and soothing ambient cadences.",
+        "headline": "Raindrops on Glass & Soft Rhodes",
+        "analysis": "Gentle acoustic resonance, muted reverb, and soothing downtempo cadences designed for watching gray skies from indoors.",
         "songs": [
-            {"title": "Nuvole Bianche", "artist": "Ludovico Einaudi", "reason": "Gentle, repetitive piano progressions that mimic falling rain."},
-            {"title": "Comptine d'un autre été", "artist": "Yann Tiersen", "reason": "Nostalgic accordion and piano with an intimate European rainfall charm."},
-            {"title": "Coffee", "artist": "Tom Misch & Yussef Dayes", "reason": "Downtempo neo-soul groove ideal for watching rain outside your window."},
-            {"title": "Gymnopédie No. 1", "artist": "Erik Satie", "reason": "Minimalist, bittersweet melancholy that calms the senses."}
+            {
+                "title": "Nuvole Bianche",
+                "artist": "Ludovico Einaudi",
+                "reason": "Gentle, cyclical piano progressions that echo the tempo of steady autumn rain.",
+                "textures": ["Felted Piano", "Cyclical Melodies", "Spacious Reverb", "Introspective"]
+            },
+            {
+                "title": "Coffee",
+                "artist": "Tom Misch & Yussef Dayes",
+                "reason": "Downtempo neo-soul groove with buttery warm guitar licks and live loose pocket drumming.",
+                "textures": ["Rhodes 73", "Crisp Pocket Drums", "Warm Clean Guitar", "Vinyl Feel"]
+            },
+            {
+                "title": "Gymnopédie No. 1",
+                "artist": "Erik Satie",
+                "reason": "Sparse, melancholy waltz cadence that clears mental clutter and lowers heart rate.",
+                "textures": ["Acoustic Grand", "Impressionist Cadence", "Gentle Dynamics", "Subtle Tape Hiss"]
+            },
+            {
+                "title": "Comptine d'un autre été",
+                "artist": "Yann Tiersen",
+                "reason": "Nostalgic piano and gentle accordions that carry the charm of European afternoon drizzle.",
+                "textures": ["Intimate Upright", "Acoustic Accordion", "Nostalgic Waltz", "Crisp Resonance"]
+            }
         ]
     },
     "focus": {
-        "headline": "Flow State & Steady Harmonies",
-        "analysis": "Non-intrusive rhythmic pulses, clean synths, and steady momentum for deep focus.",
+        "headline": "Kinetic Flow & Analog Harmonies",
+        "analysis": "Non-intrusive rhythmic pulses, tape-saturated synths, and steady harmonic momentum to sustain deep creative focus.",
         "songs": [
-            {"title": "Weightless", "artist": "Marconi Union", "reason": "Scientifically arranged ambient frequencies designed to lower heart rate and reduce stress."},
-            {"title": "An Ending (Ascent)", "artist": "Brian Eno", "reason": "Spacious, celestial synthesis offering friction-free background texture."},
-            {"title": "Avril 14th", "artist": "Aphex Twin", "reason": "Pristine acoustic piano with serene, focused melodic lines."},
-            {"title": "Day One", "artist": "Hans Zimmer", "reason": "Inspirational organ swells that sustain unbroken cognitive momentum."}
+            {
+                "title": "Weightless",
+                "artist": "Marconi Union",
+                "reason": "Scientifically calibrated ambient frequencies, soft acoustic guitar strums, and calming 60-BPM pulse.",
+                "textures": ["Ambient Drones", "Sub Bass", "Tape Echo", "60 BPM Pulse"]
+            },
+            {
+                "title": "An Ending (Ascent)",
+                "artist": "Brian Eno",
+                "reason": "Expansive Yamaha DX7 textures that create a cathedral-like acoustic space in headphones.",
+                "textures": ["Ethereal Pads", "Slow Attack Synths", "Deep Horizon", "Zero Friction"]
+            },
+            {
+                "title": "Avril 14th",
+                "artist": "Aphex Twin",
+                "reason": "Pristine prepared piano with subtle mechanical hammer sounds that ground the listener.",
+                "textures": ["Mechanical Piano", "Subtle Felt", "Clean Acoustics", "Delicate Touch"]
+            },
+            {
+                "title": "Day One",
+                "artist": "Hans Zimmer",
+                "reason": "Stirring pipe organ swells and ticking tempo counterpoint that drives deep unbroken concentration.",
+                "textures": ["Temple Organ", "Rhythmic Pulse", "Cinematic Reverb", "Dynamic Build"]
+            }
         ]
     },
-    "energetic": {
-        "headline": "Electric Momentum & Solar Pulse",
-        "analysis": "Upbeat grooves, bright horn sections, and driving percussive energy.",
+    "lavender": {
+        "headline": "Lavender Dusk & Ethereal Shimmer",
+        "analysis": "A dreamlike twilight atmosphere blending acoustic fingerpicking, dusty tape loops, and dreamy pale reverb.",
         "songs": [
-            {"title": "September", "artist": "Earth, Wind & Fire", "reason": "Irresistible groove and infectious brass that instantly sparks joy."},
-            {"title": "Walking on a Dream", "artist": "Empire of the Sun", "reason": "Shimmering synth lines and uplifting forward driving energy."},
-            {"title": "Don't Stop Me Now", "artist": "Queen", "reason": "High-octane vocal dynamism and unstoppable upbeat momentum."},
-            {"title": "Electric Feel", "artist": "MGMT", "reason": "Psych-pop rhythm and contagious bass groove."}
+            {
+                "title": "Holocene",
+                "artist": "Bon Iver",
+                "reason": "Layered acoustic guitars, delicate glockenspiel chimes, and falsetto harmonies that feel like dusk over water.",
+                "textures": ["Acoustic 12-String", "Glockenspiel", "Layered Choirs", "Tape Saturation"]
+            },
+            {
+                "title": "Sunset Lover",
+                "artist": "Petit Biscuit",
+                "reason": "Soft guitar plucks, pitch-shifted vocal warmth, and gentle chilled percussion.",
+                "textures": ["Warm Plucks", "Vocal Chops", "Subtle Shaker", "Pastel Ambient"]
+            },
+            {
+                "title": "Between Friends",
+                "artist": "Japanese Breakfast",
+                "reason": "Dream-pop guitar chorus and lush reverb trails reflecting quiet twilight reflections.",
+                "textures": ["Chorus Guitars", "Dream Pop", "Ethereal Vocals", "Silver Shimmer"]
+            },
+            {
+                "title": "Mystery of Love",
+                "artist": "Sufjan Stevens",
+                "reason": "Intimate fingerpicked acoustic guitar, soft mandolin strums, and tender whispers.",
+                "textures": ["Fingerstyle Guitar", "Mandolin", "Intimate Vocal", "Warm Wood"]
+            }
         ]
     },
     "default": {
-        "headline": "Harmonic Resonance & Modern Soul",
-        "analysis": "A balanced acoustic journey blending organic instrumentation and rich melodies.",
+        "headline": "Acoustic Warmth & Organic Soul",
+        "analysis": "An authentic audiophile journey blending uncompressed organic instrumentation, tube-saturated bass, and genuine melody.",
         "songs": [
-            {"title": "Dreams", "artist": "Fleetwood Mac", "reason": "Effortless groove with warm, nostalgic folk-rock textures."},
-            {"title": "Sunflower", "artist": "Post Malone & Swae Lee", "reason": "Breezy melodic hooks and uplifting relaxed pacing."},
-            {"title": "Holocene", "artist": "Bon Iver", "reason": "Expansive acoustic guitars and ethereal layered vocals."},
-            {"title": "Sunset Lover", "artist": "Petit Biscuit", "reason": "Lush melodic chillwave with soothing vocal chops."}
+            {
+                "title": "Dreams",
+                "artist": "Fleetwood Mac",
+                "reason": "One of the most perfectly recorded rhythm sections in audio history; warm Fender Rhodes and crisp hi-hats.",
+                "textures": ["Fender Rhodes", "Organic Bass", "Crisp Hi-Hat", "Pure 70s Analog"]
+            },
+            {
+                "title": "Harvest Moon",
+                "artist": "Neil Young",
+                "reason": "Swept broom percussion, gentle acoustic guitar, and pedal steel guitar that breathes like a living room session.",
+                "textures": ["Swept Brooms", "Pedal Steel", "Acoustic Warmth", "Intimate Strum"]
+            },
+            {
+                "title": "Texas Sun",
+                "artist": "Leon Bridges & Khruangbin",
+                "reason": "Vintage Texas soul with warm vintage reverb, flatwound bass strings, and effortless groove.",
+                "textures": ["Flatwound Bass", "Vintage Spring Reverb", "Soul Vocals", "Desert Groove"]
+            },
+            {
+                "title": "Little Wing",
+                "artist": "Jimi Hendrix",
+                "reason": "Glittering clean Stratocaster through a Leslie rotating speaker cabinet paired with gentle glockenspiel.",
+                "textures": ["Stratocaster", "Leslie Speaker", "Glockenspiel", "Tube Overdrive"]
+            }
         ]
     }
 }
@@ -75,7 +176,6 @@ def ensure_ollama_running():
     except Exception:
         pass
 
-    # Try launching ollama serve in background
     ollama_path = shutil.which("ollama") or r"C:\Users\nandi\AppData\Local\Programs\Ollama\ollama.exe"
     try:
         subprocess.Popen(
@@ -138,52 +238,53 @@ def get_offline_vault_recommendation(mood: str, count: int = 5):
     lower_mood = mood.lower()
     chosen_category = "default"
 
-    if any(k in lower_mood for k in ["jazz", "night", "wine", "midnight", "brass", "sax"]):
+    if any(k in lower_mood for k in ["jazz", "night", "wine", "midnight", "brass", "sax", "monk", "smoky", "cellar"]):
         chosen_category = "jazz"
-    elif any(k in lower_mood for k in ["rain", "storm", "lofi", "chill", "relax", "melanchol", "sad", "quiet"]):
+    elif any(k in lower_mood for k in ["rain", "storm", "lofi", "chill", "relax", "melanchol", "sad", "quiet", "cobblestone"]):
         chosen_category = "rain"
-    elif any(k in lower_mood for k in ["focus", "study", "code", "work", "ambient", "read", "deep"]):
+    elif any(k in lower_mood for k in ["focus", "study", "code", "work", "ambient", "read", "deep", "flow"]):
         chosen_category = "focus"
-    elif any(k in lower_mood for k in ["happy", "energetic", "dance", "party", "run", "workout", "upbeat", "hyped"]):
-        chosen_category = "energetic"
+    elif any(k in lower_mood for k in ["lavender", "dusk", "sunset", "ethereal", "dream", "shimmer", "twilight", "cedar", "folk"]):
+        chosen_category = "lavender"
 
     vault_entry = VAULT.get(chosen_category, VAULT["default"])
     return {
         "vibe_headline": vault_entry["headline"],
-        "vibe_analysis": f"{vault_entry['analysis']} (Curated via MoodPlay acoustic vault).",
+        "vibe_analysis": vault_entry["analysis"],
         "songs": vault_entry["songs"][:count]
     }
 
 
 def get_music_recommendations(mood: str, count: int = 5):
     """
-    Prompts local Gemma 3 to analyze the user's mood and return structured tracks.
-    If Ollama is offline or unavailable, automatically falls back to curated vault.
-    Then enriches each track with Spotify metadata (artwork, link, preview).
+    Prompts local Gemma 3 for genuine audiophile music curation.
+    If Ollama is offline or warming up, seamlessly falls back to acoustic vault.
+    Enriches all tracks with Spotify artwork, preview audio, and links.
     """
     ensure_ollama_running()
 
-    prompt = f"""You are an elite music curator, audiophile, and DJ.
-A listener has shared how they are feeling or their current vibe:
+    prompt = f"""You are a master record collector, audiophile, and acoustic curator for an analog vinyl archive.
+A listener has described their current atmosphere, emotion, or room mood:
 "{mood}"
 
-Analyze the emotional depth, acoustic texture, tempo, and vibe of this mood.
-Then select {count} distinctive, high-quality songs that resonate deeply with this feeling.
+Curate {count} real, remarkable songs that capture this mood with genuine sonic tactility, organic instrumentation, and acoustic warmth.
+Avoid clichés and generic commercial filler.
 
-Return your response in STRICT JSON format with this exact schema:
+Return your curation strictly in JSON format with this exact schema:
 {{
-  "vibe_headline": "A short, evocative 3-5 word phrase capturing the mood",
-  "vibe_analysis": "1-2 sentences on the emotional and acoustic texture of this mood.",
+  "vibe_headline": "3-5 word evocative title (e.g. 'Smoky Cedar & Muted Brass')",
+  "vibe_analysis": "2 concise sentences on the acoustic textures, instrumentation, and emotional landscape of this mood.",
   "songs": [
     {{
       "title": "Song Title",
-      "artist": "Artist or Band Name",
-      "reason": "1 vivid sentence explaining why this song specifically fits the mood and what sonic elements evoke it."
+      "artist": "Artist Name",
+      "reason": "1 vivid sentence explaining the instrumentation, warmth, and sonic resonance that makes this piece fit.",
+      "textures": ["Texture 1", "Texture 2", "Texture 3"]
     }}
   ]
 }}
 
-Do not include any text before or after the JSON. Return only valid JSON.
+Return ONLY valid JSON. No conversational preamble or postscript.
 """
 
     parsed = None
@@ -195,26 +296,26 @@ Do not include any text before or after the JSON. Return only valid JSON.
         content = response.get("message", {}).get("content", "")
         parsed = extract_json_from_text(content)
     except Exception as e:
-        print(f"[MoodEngine] Ollama query failed ({e}); falling back to acoustic vault.")
+        print(f"[MoodEngine] Ollama query exception ({e}); using acoustic vault.")
         parsed = get_offline_vault_recommendation(mood, count=count)
 
-    # Fallback parser if JSON parse failed
     if not parsed or not isinstance(parsed, dict) or "songs" not in parsed:
         parsed = get_offline_vault_recommendation(mood, count=count)
 
-    # Enrich each song with Spotify metadata
     enriched_tracks = []
     for item in parsed.get("songs", []):
         title = item.get("title", "").strip('"\' ')
         artist = item.get("artist", "").strip('"\' ')
-        reason = item.get("reason", "Curated for your vibe.")
+        reason = item.get("reason", "Curated for analog warmth.")
+        textures = item.get("textures", ["Analog Warmth", "Acoustic Resonance", "Vinyl Texture"])
 
         spotify_data = search_track(title, artist)
         enriched_tracks.append({
             "title": spotify_data.get("title", title),
             "artist": spotify_data.get("artist", artist),
-            "album": spotify_data.get("album", "Vibe Curation"),
+            "album": spotify_data.get("album", "Vinyl Archive"),
             "reason": reason,
+            "textures": textures,
             "spotify_url": spotify_data.get("spotify_url"),
             "image_url": spotify_data.get("image_url"),
             "preview_url": spotify_data.get("preview_url"),
@@ -224,7 +325,7 @@ Do not include any text before or after the JSON. Return only valid JSON.
 
     return {
         "mood": mood,
-        "vibe_headline": parsed.get("vibe_headline", f"Vibe: {mood.title()}"),
-        "vibe_analysis": parsed.get("vibe_analysis", "Curated acoustic experience."),
+        "vibe_headline": parsed.get("vibe_headline", f"Liner Notes: {mood.title()}"),
+        "vibe_analysis": parsed.get("vibe_analysis", "Curated with analog depth and acoustic warmth."),
         "tracks": enriched_tracks
     }

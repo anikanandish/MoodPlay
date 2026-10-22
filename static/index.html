@@ -3,149 +3,225 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MoodPlay — AI Vinyl & Music Companion</title>
+  <title>MoodPlay — Audiophile Music Companion</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <div class="ambient-glow glow-1"></div>
-  <div class="ambient-glow glow-2"></div>
-  <div class="noise-overlay"></div>
+  <!-- Ambient Atmospheric Mists: Warm Espresso + Pale Lavender -->
+  <div class="ambient-mist mist-brown"></div>
+  <div class="ambient-mist mist-lavender"></div>
+  <div class="vintage-grain"></div>
 
-  <div class="app-container">
-    <!-- Header -->
-    <header class="header">
-      <div class="brand">
-        <div class="vinyl-badge-mini" id="miniTurntable">
-          <div class="mini-disc"></div>
-          <div class="mini-dot"></div>
+  <div class="app-wrapper">
+    <!-- Editorial Masthead Header -->
+    <header class="masthead">
+      <div class="masthead-brand">
+        <div class="turntable-pip" id="pipDeck" title="MoodPlay Turntable">
+          <div class="pip-disc"></div>
+          <div class="pip-spindle"></div>
         </div>
-        <div>
-          <h1 class="logo-title">MoodPlay</h1>
-          <p class="logo-subtitle">Private Audiophile AI Music Companion</p>
+        <div class="masthead-meta">
+          <h1 class="masthead-title">MoodPlay</h1>
+          <p class="masthead-subtitle">Audiophile Archive & Acoustic Companion</p>
         </div>
       </div>
 
-      <div class="system-status-pills">
-        <div class="status-pill" id="ollamaPill">
-          <span class="status-dot"></span>
-          <span class="status-text">Ollama (Gemma 3)</span>
+      <div class="deck-indicators">
+        <div class="deck-status" id="engineStatus">
+          <span class="status-jewel jewel-lavender"></span>
+          <span class="status-label" id="engineLabel">Acoustic Vault Active</span>
         </div>
-        <div class="status-pill" id="spotifyPill">
-          <span class="status-dot"></span>
-          <span class="status-text">Spotify Ready</span>
+        <div class="deck-status" id="spotifyStatus">
+          <span class="status-jewel jewel-silver"></span>
+          <span class="status-label" id="spotifyLabel">Direct Stream Links</span>
         </div>
       </div>
     </header>
 
-    <!-- Main Content Area -->
-    <main class="main-content">
-      <!-- Hero / Input Section -->
-      <section class="mood-console">
-        <div class="console-card">
-          <div class="turntable-visual">
-            <div class="vinyl-record" id="mainVinyl">
-              <div class="grooves"></div>
-              <div class="vinyl-label">
-                <span class="label-brand">MOODPLAY</span>
-                <span class="label-rpm">33⅓ RPM</span>
+    <!-- Main Turntable Console -->
+    <main class="main-console">
+      <section class="listening-deck">
+        <div class="deck-chassis">
+          <!-- Physical Turntable Hardware Deck -->
+          <div class="turntable-hardware">
+            <div class="platter-base">
+              <div class="vinyl-disc" id="mainPlatter" title="Click to Drop / Lift Needle">
+                <div class="vinyl-groove groove-outer"></div>
+                <div class="vinyl-groove groove-mid"></div>
+                <div class="vinyl-groove groove-inner"></div>
+                
+                <div class="record-label">
+                  <div class="label-ring"></div>
+                  <span class="label-title">MOODPLAY</span>
+                  <span class="label-spec" id="rpmDisplay">33⅓ RPM</span>
+                  <div class="label-spindle"></div>
+                </div>
               </div>
-              <div class="spindle-hole"></div>
+
+              <!-- Brushed Silver Tone Arm -->
+              <div class="tone-arm-assembly" id="tonearmAssembly">
+                <div class="pivot-gimbal"></div>
+                <div class="counterweight"></div>
+                <div class="arm-tube"></div>
+                <div class="cartridge-headshell">
+                  <div class="stylus-led"></div>
+                </div>
+              </div>
             </div>
-            <div class="tone-arm" id="toneArm">
-              <div class="arm-base"></div>
-              <div class="arm-rod"></div>
-              <div class="cartridge"></div>
+
+            <!-- Tactile Deck Controls -->
+            <div class="platter-controls">
+              <div class="deck-control-group">
+                <span class="control-label">SPEED</span>
+                <button type="button" class="silver-toggle active" id="rpmToggle" title="Toggle 33 / 45 RPM">
+                  <span class="toggle-notch"></span>
+                  <span class="toggle-text">33⅓</span>
+                </button>
+              </div>
+
+              <div class="deck-control-group">
+                <span class="control-label">VINYL CRACKLE</span>
+                <button type="button" class="silver-toggle" id="crackleToggle" title="Toggle Analog Vinyl Surface Noise">
+                  <span class="toggle-notch"></span>
+                  <span class="toggle-text">OFF</span>
+                </button>
+              </div>
+
+              <div class="deck-control-group">
+                <span class="control-label">NEEDLE CUE</span>
+                <button type="button" class="cue-lever" id="cueLever" title="Drop or Lift Tone Arm">
+                  DROP ▶
+                </button>
+              </div>
             </div>
           </div>
 
-          <div class="console-form">
-            <span class="tagline-chip">100% PRIVATE • RUNS LOCALLY</span>
-            <h2 class="prompt-heading">How are you feeling right now?</h2>
-            <p class="prompt-desc">Describe your mood, room aesthetic, weather, or emotional state. Gemma 3 interprets the acoustic textures you need.</p>
+          <!-- Editorial Query Console -->
+          <div class="console-editorial">
+            <div class="catalog-badge">
+              <span class="badge-serial">ARCHIVE REF. MP-2026</span>
+              <span class="badge-divider">•</span>
+              <span class="badge-tag">PRIVATE PRESS</span>
+            </div>
 
-            <form id="moodForm" class="mood-form">
-              <div class="input-wrapper">
+            <h2 class="editorial-heading">What is your current sonic landscape?</h2>
+            <p class="editorial-subtext">
+              Describe a room atmosphere, subtle emotion, time of evening, or desired instrumentation. We match your mood with warm master recordings, uncompressed dynamics, and tactile acoustic textures.
+            </p>
+
+            <form id="moodForm" class="editorial-form">
+              <div class="input-well">
                 <input 
                   type="text" 
                   id="moodInput" 
-                  placeholder="e.g. Rainy midnight in Kyoto, craving warm Rhodes piano & mellow brass..."
+                  placeholder="e.g., Rainy autumn midnight, craving muted trumpet, vintage Rhodes, and soft brushed drums..."
                   autocomplete="off"
                   required
                 />
-                <button type="submit" id="submitBtn" class="primary-btn">
-                  <span class="btn-text">Curate Vibe</span>
-                  <span class="btn-icon">▶</span>
+                <button type="submit" id="submitBtn" class="needle-drop-btn">
+                  <span class="btn-text">Drop Needle</span>
+                  <span class="btn-needle-icon">▼</span>
                 </button>
               </div>
             </form>
 
-            <!-- Quick Mood Vibe Presets -->
-            <div class="vibe-presets">
-              <span class="vibe-label">Quick Vibes:</span>
-              <div class="preset-chips">
-                <button class="preset-chip" data-vibe="Late night jazz with pouring rain outside">☕ Late Night Jazz</button>
-                <button class="preset-chip" data-vibe="Deep focus ambient electronic for flow state coding">⚡ Deep Focus</button>
-                <button class="preset-chip" data-vibe="Nostalgic golden hour indie folk acoustic">🌅 Golden Hour</button>
-                <button class="preset-chip" data-vibe="Melancholy bittersweet piano for deep reflection">🌧️ Melancholy</button>
-                <button class="preset-chip" data-vibe="Midnight highway synthwave drive with city lights">🚗 Midnight Drive</button>
-                <button class="preset-chip" data-vibe="Warm cozy acoustic coffeehouse on a Sunday">🛋️ Cozy Acoustic</button>
+            <!-- Curated Record Crates -->
+            <div class="record-crates">
+              <span class="crate-label">Curated Crates:</span>
+              <div class="crate-chips">
+                <button class="crate-chip" data-vibe="Rain on cobblestone, warm Rhodes piano and muted trumpet">
+                  ☕ Rain on Cobblestone
+                </button>
+                <button class="crate-chip" data-vibe="Cedar cabin morning, fingerstyle acoustic guitar and tape warmth">
+                  🌿 Cedar Cabin Morning
+                </button>
+                <button class="crate-chip" data-vibe="Lavender dusk, ambient shimmer, delicate reverb and quiet reflections">
+                  🌌 Lavender Dusk
+                </button>
+                <button class="crate-chip" data-vibe="Deep flow state, minimalist analog synths and steady kinetic pulse">
+                  ⚡ Flow State Pulse
+                </button>
+                <button class="crate-chip" data-vibe="Smoky cellar jazz, upright double bass and brushed snare in dim light">
+                  🍸 Smoky Cellar Jazz
+                </button>
+                <button class="crate-chip" data-vibe="Late highway drive, warm nostalgic synthwave and midnight asphalt">
+                  🚗 Late Highway Neon
+                </button>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Loading State Banner -->
-      <section class="loading-state" id="loadingState" style="display: none;">
-        <div class="loader-content">
-          <div class="spinning-vinyl-loader"></div>
-          <h3 id="loaderTitle">Gemma 3 is analyzing the emotional texture...</h3>
-          <p id="loaderSubtitle">Sifting through acoustic harmonies, tempo curves, and sonic dynamics.</p>
-        </div>
-      </section>
-
-      <!-- Recommendations Output Section -->
-      <section class="results-section" id="resultsSection" style="display: none;">
-        <div class="vibe-interpretation-card" id="vibeCard">
-          <div class="vibe-header">
-            <span class="badge-vibe">AI Vibe Synthesis</span>
-            <h3 class="vibe-title" id="vibeTitle">Midnight Rain & Warm Brass</h3>
+      <!-- Needle Cueing & Selection Progress -->
+      <section class="cueing-state" id="loadingState" style="display: none;">
+        <div class="cueing-container">
+          <div class="analog-meter">
+            <div class="meter-needle" id="meterNeedle"></div>
+            <div class="meter-scale">
+              <span>-20</span>
+              <span>-10</span>
+              <span>-3</span>
+              <span>0 dB</span>
+              <span>+3</span>
+            </div>
           </div>
-          <p class="vibe-analysis" id="vibeAnalysis">Gemma 3 identified introspective warmth with low-tempo jazz cadences.</p>
-        </div>
-
-        <div class="tracks-header">
-          <h3>Curated Playlist</h3>
-          <span class="track-count" id="trackCount">5 Tracks</span>
-        </div>
-
-        <div class="tracks-grid" id="tracksGrid">
-          <!-- Dynamic Song Cards Injected Here -->
+          <h3 class="cueing-title" id="loaderTitle">Selecting master recordings from the archive...</h3>
+          <p class="cueing-subtitle" id="loaderSubtitle">Evaluating analog warmth, frequency curves, and acoustic dynamics.</p>
         </div>
       </section>
 
-      <!-- History Drawer -->
-      <section class="history-section" id="historySection">
-        <div class="section-title-row">
-          <h4>Recent Moods</h4>
+      <!-- Curated Selection Showcase -->
+      <section class="results-showcase" id="resultsSection" style="display: none;">
+        <!-- Liner Notes Card -->
+        <article class="liner-notes-jacket" id="vibeCard">
+          <div class="jacket-header">
+            <span class="jacket-edition">CURATOR'S LINER NOTES</span>
+            <span class="jacket-date" id="jacketDate">RECORD STORE PRESSING</span>
+          </div>
+          <h3 class="jacket-headline" id="vibeTitle">Midnight Rain & Velvet Brass</h3>
+          <p class="jacket-analysis" id="vibeAnalysis">
+            An introspective nocturnal landscape with unhurried jazz cadences, warm brushwork, and woody acoustic bass resonance.
+          </p>
+        </article>
+
+        <!-- Tracklist Header -->
+        <div class="tracklist-masthead">
+          <div class="tracklist-title-row">
+            <h4>Curated Track Selection</h4>
+            <span class="tracklist-badge" id="trackCount">5 Tracks</span>
+          </div>
+          <span class="tracklist-hint">Click Spotify for full playback • Press ▶ for 30s analog preview</span>
+        </div>
+
+        <!-- Sleeves Grid -->
+        <div class="record-sleeves-grid" id="tracksGrid">
+          <!-- Populated dynamically with vinyl record sleeve cards -->
+        </div>
+      </section>
+
+      <!-- Recent Listening History Drawer -->
+      <section class="listening-history" id="historySection">
+        <div class="history-label-row">
+          <span class="history-label">Previous Listening Sessions</span>
         </div>
         <div class="history-chips" id="historyChips">
-          <!-- History chips populated dynamically -->
+          <!-- Populated dynamically -->
         </div>
       </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="footer-privacy">
-        <span class="lock-icon">🔒</span>
-        <span>Your mood never leaves your computer. Inference performed 100% locally with <strong>Gemma 3</strong> via <strong>Ollama</strong>.</span>
+    <!-- Editorial Footer -->
+    <footer class="colophon">
+      <div class="colophon-left">
+        <span class="colophon-mark">◈</span>
+        <span>MoodPlay • Audiophile Listening Room • 100% Private Offline Inference</span>
       </div>
-      <div class="footer-links">
-        <span>MoodPlay v1.0</span>
+      <div class="colophon-right">
+        <span>Curated with Analog Heart</span>
       </div>
     </footer>
   </div>
