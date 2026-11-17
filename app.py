@@ -17,9 +17,10 @@ app = FastAPI(title="MoodPlay — Private AI Music Companion")
 
 # In-memory mood history (stores recent sessions)
 mood_history = [
-    "Late night jazz with warm rain",
-    "Deep focus ambient coding",
-    "Golden hour sunset drive"
+    "Fireplace & mulled wine with Vince Guaraldi",
+    "Snowfall on pine needles & acoustic folk",
+    "Vintage Christmas Eve with Nat King Cole",
+    "Late night jazz with warm rain"
 ]
 
 

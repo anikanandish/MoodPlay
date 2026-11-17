@@ -1,16 +1,19 @@
-# MoodPlay 🎵
+# MoodPlay 🎵 ❄️
 
 A private, audiophile AI music companion with a warm vinyl aesthetic. Understands your mood and curates music that fits how you feel—powered entirely by a local **Gemma 3** model via **Ollama**.
+
+> **🎄 Yuletide Holiday Edition:** Features ambient snowfall simulation, an interactive fireside hearth crackle synthesizer, winter holiday acoustic vaults (vintage holiday jazz, winter folk, cozy fireside masters), and seasonal tactile turntable deck controls.
 
 ---
 
 ## ✨ Features
 
 - **100% Private Local AI:** Uses Google Gemma 3 running locally inside Ollama. Your personal mood descriptions never leave your computer.
-- **Warm Vinyl Aesthetic:** Modern web application featuring vinyl spinning animation, tone arm mechanics, and amber dark-mode cards.
+- **Warm Vinyl Aesthetic & Yuletide Edition:** Modern web application featuring vinyl spinning animation, brushed silver tone arm mechanics, customizable RPM speeds (33⅓ & 45 RPM), and sliding record sleeve jackets.
+- **Tactile Deck & Audio Synthesizers:** Built-in Web Audio API analog vinyl crackle generator and fireside hearth ember crackle simulator, plus toggleable ambient winter snowfall.
 - **Spotify Curation & Previews:** Direct Spotify search links, live album cover art, and 30-second audio previews (when API keys are supplied; gracefully falls back to offline search links without keys).
-- **Acoustic Texture Analysis:** Gemma 3 analyzes your emotional state, tempo curves, and sonic elements to explain why each track fits.
-- **Quick Vibe Chips & Search History:** Instant one-click presets like *Late Night Jazz*, *Deep Focus*, *Golden Hour*, and *Midnight Drive*.
+- **Acoustic Texture Analysis:** Gemma 3 analyzes your emotional state, tempo curves, and sonic elements (brushed snare, upright bass, celesta, Rhodes, tape warmth) to explain why each track fits.
+- **Curated Holiday & Mood Crates:** Instant one-click presets like *Fireplace & Mulled Wine*, *Snowfall on Pine Needles*, *Vintage Christmas Eve*, *Silent Midnight Walk*, and *Yuletide Bossa*.
 
 ---
 
