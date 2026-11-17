@@ -1,15 +1,31 @@
-// MoodPlay — Audiophile Companion Frontend Logic
+// MoodPlay — Yuletide Holiday Edition Frontend Logic
 
 let currentAudio = null;
 let currentAudioBtn = null;
 let currentRpm = 33;
 let isCued = false;
 
-// Web Audio API Vinyl Crackle Simulator
+// Web Audio API Analog Simulator
 let audioCtx = null;
+
+// Vinyl Crackle State
 let crackleNode = null;
 let crackleGain = null;
 let isCracklePlaying = false;
+
+// Hearth / Fireplace Crackle State
+let hearthSource = null;
+let hearthFilter = null;
+let hearthGain = null;
+let isHearthPlaying = false;
+let hearthPopInterval = null;
+
+// Canvas Snowfall State
+let snowCanvas = null;
+let snowCtx = null;
+let snowflakes = [];
+let isSnowing = true;
+let snowAnimId = null;
 
 document.addEventListener('DOMContentLoaded', () => {
   initSystemStatus();
@@ -17,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupDeckControls();
   setupCrateChips();
   setupForm();
+  initSnowfall();
 });
 
 // System Status Check
@@ -29,9 +46,9 @@ async function initSystemStatus() {
     const data = await res.json();
 
     if (data.ollama && data.ollama.online) {
-      engineLabel.textContent = 'Gemma 3 Analog Engine';
+      engineLabel.textContent = 'Gemma 3 Yuletide Engine';
     } else {
-      engineLabel.textContent = 'Acoustic Vault Active';
+      engineLabel.textContent = 'Holiday Vault Active';
     }
 
     if (data.spotify && data.spotify.configured) {
@@ -72,6 +89,8 @@ async function initListeningHistory() {
 function setupDeckControls() {
   const rpmToggle = document.getElementById('rpmToggle');
   const crackleToggle = document.getElementById('crackleToggle');
+  const hearthToggle = document.getElementById('hearthToggle');
+  const snowToggle = document.getElementById('snowToggle');
   const cueLever = document.getElementById('cueLever');
   const mainPlatter = document.getElementById('mainPlatter');
   const tonearmAssembly = document.getElementById('tonearmAssembly');
@@ -95,10 +114,33 @@ function setupDeckControls() {
     }
   });
 
-  // Vinyl Crackle Noise Toggle (Web Audio API)
+  // Vinyl Crackle Noise Toggle
   crackleToggle.addEventListener('click', () => {
     toggleVinylCrackle(crackleToggle);
   });
+
+  // Fireside Hearth Crackle Toggle
+  if (hearthToggle) {
+    hearthToggle.addEventListener('click', () => {
+      toggleHearthAudio(hearthToggle);
+    });
+  }
+
+  // Snowfall Toggle
+  if (snowToggle) {
+    snowToggle.addEventListener('click', () => {
+      isSnowing = !isSnowing;
+      if (isSnowing) {
+        snowToggle.classList.add('active');
+        snowToggle.querySelector('.toggle-text').textContent = 'ON';
+        if (snowCanvas) snowCanvas.classList.remove('disabled');
+      } else {
+        snowToggle.classList.remove('active');
+        snowToggle.querySelector('.toggle-text').textContent = 'OFF';
+        if (snowCanvas) snowCanvas.classList.add('disabled');
+      }
+    });
+  }
 
   // Cue Lever Drop/Lift
   cueLever.addEventListener('click', () => {
@@ -130,6 +172,18 @@ function toggleCue() {
   }
 }
 
+// Web Audio Context Helper
+function getOrCreateAudioContext() {
+  if (!audioCtx) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AudioContext();
+  }
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+  return audioCtx;
+}
+
 // Web Audio API Analog Vinyl Crackle Generator
 function toggleVinylCrackle(btn) {
   if (isCracklePlaying) {
@@ -147,13 +201,10 @@ function toggleVinylCrackle(btn) {
   }
 
   try {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!audioCtx) audioCtx = new AudioContext();
-    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const ctx = getOrCreateAudioContext();
 
-    // Create a buffer with soft vinyl noise and periodic microscopic pops
-    const bufferSize = audioCtx.sampleRate * 2;
-    const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const bufferSize = ctx.sampleRate * 2;
+    const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
     const output = noiseBuffer.getChannelData(0);
 
     for (let i = 0; i < bufferSize; i++) {
@@ -165,30 +216,188 @@ function toggleVinylCrackle(btn) {
       output[i] = white * 0.015 + crackle;
     }
 
-    crackleNode = audioCtx.createBufferSource();
+    crackleNode = ctx.createBufferSource();
     crackleNode.buffer = noiseBuffer;
     crackleNode.loop = true;
 
-    // Filter to warm analog low-pass
-    const filter = audioCtx.createBiquadFilter();
+    const filter = ctx.createBiquadFilter();
     filter.type = 'lowpass';
     filter.frequency.value = 1800;
 
-    crackleGain = audioCtx.createGain();
-    crackleGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-    crackleGain.gain.exponentialRampToValueAtTime(0.28, audioCtx.currentTime + 0.5);
+    crackleGain = ctx.createGain();
+    crackleGain.gain.setValueAtTime(0.001, ctx.currentTime);
+    crackleGain.gain.exponentialRampToValueAtTime(0.28, ctx.currentTime + 0.5);
 
     crackleNode.connect(filter);
     filter.connect(crackleGain);
-    crackleGain.connect(audioCtx.destination);
+    crackleGain.connect(ctx.destination);
 
     crackleNode.start(0);
     isCracklePlaying = true;
     btn.classList.add('active');
     btn.querySelector('.toggle-text').textContent = 'ON';
   } catch (e) {
-    console.warn('Web Audio not allowed or failed:', e);
+    console.warn('Web Audio crackle failed:', e);
   }
+}
+
+// Web Audio API Fireside Hearth & Wood Crackle Synthesizer
+function toggleHearthAudio(btn) {
+  if (isHearthPlaying) {
+    if (hearthGain && audioCtx) {
+      hearthGain.gain.setValueAtTime(hearthGain.gain.value, audioCtx.currentTime);
+      hearthGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.4);
+      setTimeout(() => {
+        if (hearthSource) hearthSource.disconnect();
+        clearInterval(hearthPopInterval);
+      }, 450);
+    }
+    isHearthPlaying = false;
+    btn.classList.remove('active');
+    btn.querySelector('.toggle-text').textContent = 'OFF';
+    return;
+  }
+
+  try {
+    const ctx = getOrCreateAudioContext();
+
+    // 1. Warm rumble of a living fireplace (brown noise)
+    const bufferSize = ctx.sampleRate * 3;
+    const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data = noiseBuffer.getChannelData(0);
+    let lastOut = 0.0;
+
+    for (let i = 0; i < bufferSize; i++) {
+      let white = Math.random() * 2 - 1;
+      // Brown noise integration
+      lastOut = (lastOut + (0.02 * white)) / 1.02;
+      data[i] = lastOut * 3.5;
+    }
+
+    hearthSource = ctx.createBufferSource();
+    hearthSource.buffer = noiseBuffer;
+    hearthSource.loop = true;
+
+    // Warm hearth lowpass
+    hearthFilter = ctx.createBiquadFilter();
+    hearthFilter.type = 'lowpass';
+    hearthFilter.frequency.value = 450;
+    hearthFilter.Q.value = 1.2;
+
+    hearthGain = ctx.createGain();
+    hearthGain.gain.setValueAtTime(0.001, ctx.currentTime);
+    hearthGain.gain.exponentialRampToValueAtTime(0.25, ctx.currentTime + 0.6);
+
+    hearthSource.connect(hearthFilter);
+    hearthFilter.connect(hearthGain);
+    hearthGain.connect(ctx.destination);
+
+    hearthSource.start(0);
+
+    // 2. Periodic natural wood snap/pop bursts
+    hearthPopInterval = setInterval(() => {
+      if (!isHearthPlaying || !audioCtx) return;
+      if (Math.random() < 0.65) {
+        triggerHearthPop(ctx);
+      }
+    }, 400);
+
+    isHearthPlaying = true;
+    btn.classList.add('active');
+    btn.querySelector('.toggle-text').textContent = 'ON';
+  } catch (e) {
+    console.warn('Web Audio hearth failed:', e);
+  }
+}
+
+// Single wood ember snap/pop sound
+function triggerHearthPop(ctx) {
+  try {
+    const popOsc = ctx.createOscillator();
+    const popGain = ctx.createGain();
+    const popFilter = ctx.createBiquadFilter();
+
+    popFilter.type = 'bandpass';
+    popFilter.frequency.value = 600 + Math.random() * 900;
+    popFilter.Q.value = 3.0;
+
+    const startFreq = 250 + Math.random() * 400;
+    popOsc.frequency.setValueAtTime(startFreq, ctx.currentTime);
+    popOsc.frequency.exponentialRampToValueAtTime(50, ctx.currentTime + 0.04);
+
+    const amp = 0.08 + Math.random() * 0.12;
+    popGain.gain.setValueAtTime(amp, ctx.currentTime);
+    popGain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.05);
+
+    popOsc.connect(popFilter);
+    popFilter.connect(popGain);
+    popGain.connect(ctx.destination);
+
+    popOsc.start(ctx.currentTime);
+    popOsc.stop(ctx.currentTime + 0.06);
+  } catch (err) {
+    // Graceful fallback
+  }
+}
+
+// Ambient Snowfall Simulation
+function initSnowfall() {
+  snowCanvas = document.getElementById('snowCanvas');
+  if (!snowCanvas) return;
+  snowCtx = snowCanvas.getContext('2d');
+
+  function resize() {
+    snowCanvas.width = window.innerWidth;
+    snowCanvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  // Create gentle snowflakes
+  const flakeCount = Math.min(window.innerWidth < 768 ? 40 : 75, 90);
+  snowflakes = [];
+  for (let i = 0; i < flakeCount; i++) {
+    snowflakes.push({
+      x: Math.random() * snowCanvas.width,
+      y: Math.random() * snowCanvas.height,
+      radius: Math.random() * 2.2 + 0.8,
+      density: Math.random() * flakeCount,
+      speedY: Math.random() * 0.8 + 0.4,
+      speedX: Math.random() * 0.6 - 0.3,
+      opacity: Math.random() * 0.5 + 0.25,
+      swayStep: Math.random() * Math.PI * 2
+    });
+  }
+
+  function renderSnow() {
+    if (!snowCtx) return;
+    snowCtx.clearRect(0, 0, snowCanvas.width, snowCanvas.height);
+
+    if (isSnowing) {
+      snowCtx.fillStyle = '#ffffff';
+      for (let i = 0; i < snowflakes.length; i++) {
+        const f = snowflakes[i];
+        f.swayStep += 0.015;
+        f.x += Math.sin(f.swayStep) * 0.6 + f.speedX;
+        f.y += f.speedY;
+
+        // Wrap around boundaries
+        if (f.y > snowCanvas.height) {
+          f.y = -10;
+          f.x = Math.random() * snowCanvas.width;
+        }
+        if (f.x > snowCanvas.width) f.x = 0;
+        if (f.x < 0) f.x = snowCanvas.width;
+
+        snowCtx.beginPath();
+        snowCtx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
+        snowCtx.fillStyle = `rgba(240, 244, 255, ${f.opacity})`;
+        snowCtx.fill();
+      }
+    }
+    snowAnimId = requestAnimationFrame(renderSnow);
+  }
+  renderSnow();
 }
 
 // Curated Crate Chips
@@ -238,12 +447,12 @@ async function triggerCuration(mood) {
   resultsSection.style.display = 'none';
   loadingState.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
-  // Rotating atmospheric cue messages
+  // Rotating atmospheric holiday cue messages
   const titles = [
-    'Selecting master recordings from the archive...',
-    'Tuning tube saturation and acoustic resonance...',
-    'Reviewing warm vinyl liner notes...',
-    'Dropping needle onto curated grooves...'
+    'Selecting holiday masters from the archive...',
+    'Tuning tube saturation and fireside resonance...',
+    'Unpacking vintage yuletide vinyl sleeves...',
+    'Dropping stylus onto winter grooves...'
   ];
   let msgIdx = 0;
   const interval = setInterval(() => {
@@ -270,7 +479,7 @@ async function triggerCuration(mood) {
   } catch (err) {
     console.warn("Curation Notice:", err);
     resultsSection.style.display = 'block';
-    document.getElementById('vibeTitle').textContent = 'Archive Curations';
+    document.getElementById('vibeTitle').textContent = 'Yuletide Archive Curations';
     document.getElementById('vibeAnalysis').textContent = `Using offline acoustic vault: ${err.message}`;
   } finally {
     clearInterval(interval);
@@ -287,8 +496,8 @@ function renderSelectionResults(data) {
   const trackCount = document.getElementById('trackCount');
   const tracksGrid = document.getElementById('tracksGrid');
 
-  vibeTitle.textContent = data.vibe_headline || `Selection for: ${data.mood}`;
-  vibeAnalysis.textContent = data.vibe_analysis || 'Curated with unhurried analog warmth and genuine acoustic presence.';
+  vibeTitle.textContent = data.vibe_headline || `Yuletide Selection for: ${data.mood}`;
+  vibeAnalysis.textContent = data.vibe_analysis || 'Curated with unhurried analog warmth, holiday cheer, and acoustic presence.';
   trackCount.textContent = `${data.tracks.length} Master Cuts`;
 
   tracksGrid.innerHTML = '';
@@ -299,7 +508,7 @@ function renderSelectionResults(data) {
     card.style.animationDelay = `${index * 0.08}s`;
 
     // Texture tags
-    const textures = track.textures || ['Analog Warmth', 'Acoustic Resonance', 'Vinyl Texture'];
+    const textures = track.textures || ['Holiday Jazz', 'Analog Warmth', 'Winter Vinyl'];
     const tagsHtml = textures.map(t => `<span class="texture-pill">${escapeHtml(t)}</span>`).join('');
 
     // Album art or physical sleeve fallback
@@ -317,8 +526,8 @@ function renderSelectionResults(data) {
       artHtml = `
         <div class="art-pocket">
           <div class="sleeve-fallback-cover">
-            <span class="fallback-glyph">◈</span>
-            <span class="fallback-sub">VINYL</span>
+            <span class="fallback-glyph">❄</span>
+            <span class="fallback-sub">YULETIDE</span>
           </div>
           <div class="sliding-vinyl">
             <div class="sliding-label"></div>
@@ -343,7 +552,7 @@ function renderSelectionResults(data) {
         <div class="sleeve-title-row">
           <h4 class="track-heading">${escapeHtml(track.title)}</h4>
           <span class="track-artist">${escapeHtml(track.artist)}</span>
-          <span class="track-album">• ${escapeHtml(track.album || 'Master Recording')}</span>
+          <span class="track-album">• ${escapeHtml(track.album || 'Holiday Master Recording')}</span>
         </div>
         <div class="texture-tags">
           ${tagsHtml}
