@@ -15,6 +15,102 @@ MODEL_NAME = "gemma3"
 
 # Curated acoustic vault for offline / warmup fallback
 VAULT = {
+    "christmas": {
+        "headline": "Vintage Yuletide & Hearthside Velvet",
+        "analysis": "Timeless holiday warmth characterized by acoustic trio brushwork, brushed jazz snare, muted brass, and lush analog tube recordings that evoke falling snow outside a warm window.",
+        "songs": [
+            {
+                "title": "Christmas Time Is Here",
+                "artist": "Vince Guaraldi Trio",
+                "reason": "The quintessential holiday jazz masterpiece—poignant piano voicings, gentle brushed cymbals, and a quiet, nostalgic winter waltz.",
+                "textures": ["Brushed Snare", "Upright Bass", "Acoustic Piano", "Analog Warmth"]
+            },
+            {
+                "title": "The Christmas Song (Chestnuts Roasting on an Open Fire)",
+                "artist": "Nat King Cole",
+                "reason": "Silken vocal intimacy framed by Nelson Riddle's lush string orchestrations and warm tube microphone saturation.",
+                "textures": ["Tube Mic Warmth", "Lush Strings", "Baritone Velvet", "Vintage Vinyl"]
+            },
+            {
+                "title": "Have Yourself a Merry Little Christmas",
+                "artist": "Ella Fitzgerald",
+                "reason": "Subtle, unhurried phrasing with Frank DeVol's gentle orchestra, radiating heartfelt melancholy and tender cheer.",
+                "textures": ["Orchestral Warmth", "Velvet Vocals", "Mellow Horns", "Vintage Tape"]
+            },
+            {
+                "title": "Sugar Rum Cherry (Dance of the Sugar-Plum Fairy)",
+                "artist": "Duke Ellington",
+                "reason": "A sultry, smoky big-band reimagining of Tchaikovsky with sultry saxophones and low-slung, nocturnal percussion.",
+                "textures": ["Smoky Saxophone", "Late Night Swing", "Muted Trumpets", "Room Ambience"]
+            },
+            {
+                "title": "Santa Claus Is Coming to Town",
+                "artist": "Bill Evans",
+                "reason": "Sophisticated modal jazz harmonies and delicate, impressionistic touch turning a familiar tune into a masterpiece.",
+                "textures": ["Impressionist Piano", "Modal Voicings", "Acoustic Trio", "Warm Velvet"]
+            }
+        ]
+    },
+    "winter_snow": {
+        "headline": "Pine Needles, First Frost & Still Waters",
+        "analysis": "An evocative winter landscape blending intimate fingerstyle acoustic guitar, winter piano, layered choral harmonies, and quiet atmospheric stillness.",
+        "songs": [
+            {
+                "title": "Sister Winter",
+                "artist": "Sufjan Stevens",
+                "reason": "Begins as a quiet fingerpicked folk hymn before blossoming into majestic horns, strings, and sleigh bells.",
+                "textures": ["Acoustic Fingerstyle", "Sleigh Bells", "Brass Swell", "Chamber Folk"]
+            },
+            {
+                "title": "River",
+                "artist": "Joni Mitchell",
+                "reason": "Solitary acoustic piano quoting 'Jingle Bells' under poignant, aching poetry about winter longing and peace.",
+                "textures": ["Acoustic Grand", "Melancholy Reverb", "Intimate Vocal", "Winter Solitude"]
+            },
+            {
+                "title": "White Winter Hymnal",
+                "artist": "Fleet Foxes",
+                "reason": "Cascading round-robin vocal harmonies and ringing acoustic guitars wrapped in crisp winter reverb.",
+                "textures": ["Layered Harmonies", "Acoustic 12-String", "Tambourine", "Timber Reverb"]
+            },
+            {
+                "title": "December",
+                "artist": "George Winston",
+                "reason": "Pristine solo piano capturing the crisp crystalline silence of fresh snow falling through dark pine branches.",
+                "textures": ["Solo Grand Piano", "Crystalline Reverb", "Clean Attack", "Winter Stillness"]
+            }
+        ]
+    },
+    "fireplace": {
+        "headline": "Mulled Wine, Embers & Spiced Cedar",
+        "analysis": "Deep fireside comfort featuring nylon guitars, muted jazz horns, warm Rhodes electric pianos, and mellow walking basslines.",
+        "songs": [
+            {
+                "title": "Winter Wonderland",
+                "artist": "Chet Baker",
+                "reason": "Baker's whisper-soft trumpet and gentle, melancholic vocal cadence evoke glowing embers late on Christmas Eve.",
+                "textures": ["Chet Trumpet", "Whisper Vocal", "Gentle Brushes", "Hearth Warmth"]
+            },
+            {
+                "title": "Peace",
+                "artist": "Norah Jones",
+                "reason": "Understated Fender Rhodes, acoustic bass, and soothing holiday vocal presence delivering pure fireside tranquility.",
+                "textures": ["Fender Rhodes", "Soft Snare", "Warm Vocal", "Intimate Living Room"]
+            },
+            {
+                "title": "A Child Is Born",
+                "artist": "Oscar Peterson Trio",
+                "reason": "Rich harmonic warmth, delicate blues inflections, and immaculate acoustic trio accompaniment.",
+                "textures": ["Bluesy Piano", "Acoustic Bass", "Brushed Cymbals", "Cozy Embers"]
+            },
+            {
+                "title": "Jingle Bell Rock",
+                "artist": "Chet Atkins",
+                "reason": "Virtuosic Gretsch thumb-picked guitar with analog tape slapback and joyful acoustic groove.",
+                "textures": ["Gretsch Guitar", "Thumbpicking", "Analog Slapback", "Vintage Groove"]
+            }
+        ]
+    },
     "jazz": {
         "headline": "Velvet Brass & Dim Lamplight",
         "analysis": "A nocturnal landscape defined by warm brushwork on coated snare heads, melancholic horn voicings, and the woody acoustic resonance of an upright bass.",
@@ -238,7 +334,13 @@ def get_offline_vault_recommendation(mood: str, count: int = 5):
     lower_mood = mood.lower()
     chosen_category = "default"
 
-    if any(k in lower_mood for k in ["jazz", "night", "wine", "midnight", "brass", "sax", "monk", "smoky", "cellar"]):
+    if any(k in lower_mood for k in ["christmas", "xmas", "holiday", "yuletide", "santa", "noel", "carol", "mistletoe", "nutcracker"]):
+        chosen_category = "christmas"
+    elif any(k in lower_mood for k in ["fireplace", "hearth", "embers", "fire", "mulled", "spiced", "cabin"]):
+        chosen_category = "fireplace"
+    elif any(k in lower_mood for k in ["snow", "winter", "frost", "blizzard", "december", "ice", "freeze", "solstice"]):
+        chosen_category = "winter_snow"
+    elif any(k in lower_mood for k in ["jazz", "night", "wine", "midnight", "brass", "sax", "monk", "smoky", "cellar"]):
         chosen_category = "jazz"
     elif any(k in lower_mood for k in ["rain", "storm", "lofi", "chill", "relax", "melanchol", "sad", "quiet", "cobblestone"]):
         chosen_category = "rain"
@@ -268,6 +370,7 @@ A listener has described their current atmosphere, emotion, or room mood:
 "{mood}"
 
 Curate {count} real, remarkable songs that capture this mood with genuine sonic tactility, organic instrumentation, and acoustic warmth.
+If the mood is related to Christmas, the holidays, or winter (e.g. snow, fireside, pine, yuletide), curate timeless analog master recordings—vintage holiday jazz (Vince Guaraldi, Nat King Cole, Ella Fitzgerald, Bill Evans, Chet Baker), winter acoustic/folk (Sufjan Stevens, Joni Mitchell, Fleet Foxes), or classical celesta/strings rather than modern commercial pop.
 Avoid clichés and generic commercial filler.
 
 Return your curation strictly in JSON format with this exact schema:
