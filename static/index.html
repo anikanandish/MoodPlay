@@ -10,29 +10,36 @@
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <!-- Ambient Atmospheric Mists: Warm Espresso + Pale Lavender -->
+  <!-- Ambient Atmospheric Mists: Warm Espresso + Pine Evergreen + Cranberry Ruby -->
   <div class="ambient-mist mist-brown"></div>
+  <div class="ambient-mist mist-pine"></div>
+  <div class="ambient-mist mist-cranberry"></div>
   <div class="ambient-mist mist-lavender"></div>
   <div class="vintage-grain"></div>
+  <canvas id="snowCanvas" class="snow-canvas" title="Ambient Snowfall"></canvas>
 
   <div class="app-wrapper">
     <!-- Editorial Masthead Header -->
     <header class="masthead">
       <div class="masthead-brand">
-        <div class="turntable-pip" id="pipDeck" title="MoodPlay Turntable">
+        <div class="turntable-pip holiday-pip" id="pipDeck" title="MoodPlay Turntable — Click to Cue">
           <div class="pip-disc"></div>
           <div class="pip-spindle"></div>
+          <span class="pip-holiday-badge">❄</span>
         </div>
         <div class="masthead-meta">
-          <h1 class="masthead-title">MoodPlay</h1>
-          <p class="masthead-subtitle">Audiophile Archive & Acoustic Companion</p>
+          <div class="masthead-title-row">
+            <h1 class="masthead-title">MoodPlay</h1>
+            <span class="holiday-edition-tag">YULETIDE EDITION</span>
+          </div>
+          <p class="masthead-subtitle">Holiday Pressing • Audiophile Winter Archive</p>
         </div>
       </div>
 
       <div class="deck-indicators">
         <div class="deck-status" id="engineStatus">
-          <span class="status-jewel jewel-lavender"></span>
-          <span class="status-label" id="engineLabel">Acoustic Vault Active</span>
+          <span class="status-jewel jewel-holiday"></span>
+          <span class="status-label" id="engineLabel">Holiday Vault Active</span>
         </div>
         <div class="deck-status" id="spotifyStatus">
           <span class="status-jewel jewel-silver"></span>
@@ -53,8 +60,9 @@
                 <div class="vinyl-groove groove-mid"></div>
                 <div class="vinyl-groove groove-inner"></div>
                 
-                <div class="record-label">
-                  <div class="label-ring"></div>
+                <div class="record-label holiday-label">
+                  <div class="label-ring holiday-ring"></div>
+                  <span class="label-holiday-tag">YULETIDE ARCHIVE</span>
                   <span class="label-title">MOODPLAY</span>
                   <span class="label-spec" id="rpmDisplay">33⅓ RPM</span>
                   <div class="label-spindle"></div>
@@ -91,6 +99,22 @@
               </div>
 
               <div class="deck-control-group">
+                <span class="control-label">HEARTH FIRE</span>
+                <button type="button" class="silver-toggle" id="hearthToggle" title="Toggle Fireside Wood Ember Crackle">
+                  <span class="toggle-notch"></span>
+                  <span class="toggle-text">OFF</span>
+                </button>
+              </div>
+
+              <div class="deck-control-group">
+                <span class="control-label">SNOWFALL</span>
+                <button type="button" class="silver-toggle active" id="snowToggle" title="Toggle Ambient Winter Snow">
+                  <span class="toggle-notch"></span>
+                  <span class="toggle-text">ON</span>
+                </button>
+              </div>
+
+              <div class="deck-control-group">
                 <span class="control-label">NEEDLE CUE</span>
                 <button type="button" class="cue-lever" id="cueLever" title="Drop or Lift Tone Arm">
                   DROP ▶
@@ -101,15 +125,15 @@
 
           <!-- Editorial Query Console -->
           <div class="console-editorial">
-            <div class="catalog-badge">
-              <span class="badge-serial">ARCHIVE REF. MP-2026</span>
+            <div class="catalog-badge holiday-catalog-badge">
+              <span class="badge-serial">ARCHIVE REF. MP-YULE-2026</span>
               <span class="badge-divider">•</span>
-              <span class="badge-tag">PRIVATE PRESS</span>
+              <span class="badge-tag">HOLIDAY SPECIAL PRESSING</span>
             </div>
 
-            <h2 class="editorial-heading">What is your current sonic landscape?</h2>
+            <h2 class="editorial-heading">What is your holiday sonic landscape?</h2>
             <p class="editorial-subtext">
-              Describe a room atmosphere, subtle emotion, time of evening, or desired instrumentation. We match your mood with warm master recordings, uncompressed dynamics, and tactile acoustic textures.
+              Describe a cozy winter room, fireside emotion, snowy twilight, or desired holiday instrumentation. We match your mood with warm analog masters, unhurried holiday jazz, and authentic winter acoustics.
             </p>
 
             <form id="moodForm" class="editorial-form">
@@ -117,7 +141,7 @@
                 <input 
                   type="text" 
                   id="moodInput" 
-                  placeholder="e.g., Rainy autumn midnight, craving muted trumpet, vintage Rhodes, and soft brushed drums..."
+                  placeholder="e.g., Late December fireside, Vince Guaraldi piano, pine needles & mulled wine..."
                   autocomplete="off"
                   required
                 />
@@ -130,25 +154,31 @@
 
             <!-- Curated Record Crates -->
             <div class="record-crates">
-              <span class="crate-label">Curated Crates:</span>
+              <span class="crate-label">Curated Holiday Crates:</span>
               <div class="crate-chips">
-                <button class="crate-chip" data-vibe="Rain on cobblestone, warm Rhodes piano and muted trumpet">
-                  ☕ Rain on Cobblestone
+                <button class="crate-chip" data-vibe="Fireplace and mulled wine, Vince Guaraldi trio piano and brushed jazz">
+                  🎄 Fireplace & Mulled Wine
                 </button>
-                <button class="crate-chip" data-vibe="Cedar cabin morning, fingerstyle acoustic guitar and tape warmth">
-                  🌿 Cedar Cabin Morning
+                <button class="crate-chip" data-vibe="Snowfall on pine needles, quiet acoustic fingerstyle, gentle celesta and winter woods">
+                  ❄️ Snowfall on Pine Needles
                 </button>
-                <button class="crate-chip" data-vibe="Lavender dusk, ambient shimmer, delicate reverb and quiet reflections">
-                  🌌 Lavender Dusk
+                <button class="crate-chip" data-vibe="Vintage Christmas Eve 1958, Nat King Cole, velvet strings and warm tube microphone">
+                  🕯️ Vintage Christmas Eve
                 </button>
-                <button class="crate-chip" data-vibe="Deep flow state, minimalist analog synths and steady kinetic pulse">
-                  ⚡ Flow State Pulse
+                <button class="crate-chip" data-vibe="Cozy holiday morning, warm coffee, mellow acoustic guitar and peaceful winter carols">
+                  ☕ Cozy Holiday Morning
                 </button>
-                <button class="crate-chip" data-vibe="Smoky cellar jazz, upright double bass and brushed snare in dim light">
-                  🍸 Smoky Cellar Jazz
+                <button class="crate-chip" data-vibe="Silent midnight walk, felted piano, ambient winter reverb and frost on streetlamps">
+                  🌙 Silent Midnight Walk
                 </button>
-                <button class="crate-chip" data-vibe="Late highway drive, warm nostalgic synthwave and midnight asphalt">
-                  🚗 Late Highway Neon
+                <button class="crate-chip" data-vibe="Nutcracker and winter waltz, orchestral celesta, strings and holiday nostalgia">
+                  🍷 Nutcracker & Winter Waltz
+                </button>
+                <button class="crate-chip" data-vibe="Yuletide bossa and hearth, warm nylon guitars, soft percussion and festive joy">
+                  🛷 Yuletide Bossa & Hearth
+                </button>
+                <button class="crate-chip" data-vibe="Smoky cellar Christmas jazz, upright double bass, muted horn and brushed snare">
+                  🍸 Smoky Cellar Christmas
                 </button>
               </div>
             </div>
@@ -177,10 +207,10 @@
       <!-- Curated Selection Showcase -->
       <section class="results-showcase" id="resultsSection" style="display: none;">
         <!-- Liner Notes Card -->
-        <article class="liner-notes-jacket" id="vibeCard">
+        <article class="liner-notes-jacket holiday-jacket" id="vibeCard">
           <div class="jacket-header">
-            <span class="jacket-edition">CURATOR'S LINER NOTES</span>
-            <span class="jacket-date" id="jacketDate">RECORD STORE PRESSING</span>
+            <span class="jacket-edition">YULETIDE LINER NOTES</span>
+            <span class="jacket-date" id="jacketDate">SPECIAL WINTER PRESSING</span>
           </div>
           <h3 class="jacket-headline" id="vibeTitle">Midnight Rain & Velvet Brass</h3>
           <p class="jacket-analysis" id="vibeAnalysis">
@@ -191,7 +221,7 @@
         <!-- Tracklist Header -->
         <div class="tracklist-masthead">
           <div class="tracklist-title-row">
-            <h4>Curated Track Selection</h4>
+            <h4>Holiday Master Cuts</h4>
             <span class="tracklist-badge" id="trackCount">5 Tracks</span>
           </div>
           <span class="tracklist-hint">Click Spotify for full playback • Press ▶ for 30s analog preview</span>
@@ -206,7 +236,7 @@
       <!-- Recent Listening History Drawer -->
       <section class="listening-history" id="historySection">
         <div class="history-label-row">
-          <span class="history-label">Previous Listening Sessions</span>
+          <span class="history-label">Previous Holiday Listening Sessions</span>
         </div>
         <div class="history-chips" id="historyChips">
           <!-- Populated dynamically -->
@@ -217,11 +247,11 @@
     <!-- Editorial Footer -->
     <footer class="colophon">
       <div class="colophon-left">
-        <span class="colophon-mark">◈</span>
-        <span>MoodPlay • Audiophile Listening Room • 100% Private Offline Inference</span>
+        <span class="colophon-mark">❄</span>
+        <span>MoodPlay • Yuletide Listening Room • 100% Private Offline Inference</span>
       </div>
       <div class="colophon-right">
-        <span>Curated with Analog Heart</span>
+        <span>Curated with Analog Warmth & Holiday Spirit</span>
       </div>
     </footer>
   </div>
